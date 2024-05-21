@@ -42,7 +42,7 @@ export const generateFlagHTML = () => {
   return template.replace('{{flag}}', flag);
 };
 
-const shuffleFlagIntoHTML = url => {
+const shuffleFlagIntoHTML = flagUrl => {
   function generateRandomString() {
     const length = Math.floor(Math.random() * 10) + 5; // Random length between 5 and 14
     const characters =
@@ -62,7 +62,11 @@ const shuffleFlagIntoHTML = url => {
     return randomString;
   }
 
-  // Helper function to create a correct structure
+  function getRandomTag(tags = ['article', 'section', 'div', 'code', 'i']) {
+    const randomTag = tags[Math.floor(Math.random() * tags.length)];
+    return randomTag;
+  }
+
   function createCorrectStructure(char) {
     return `
         <code data-class="42${generateRandomString()}">
@@ -75,37 +79,62 @@ const shuffleFlagIntoHTML = url => {
       `;
   }
 
-  // Helper function to create an incorrect structure
   function createIncorrectStructure(char) {
-    const tags = ['article', 'section', 'div'];
-    const randomTag = tags[Math.floor(Math.random() * tags.length)];
     /* Wells note: We can make so the data-class, data-tag and data-id are actually useful in a near future, 
       but so far for students I thought it would be too dificult since it involves regex to actually 
       filter these on the final solution. So I left it in the final challenge more as a distraction, 
       but they have no impact on the current solution.
     */
+    const randomTag1 = getRandomTag();
+    // if first tag is 'code', second tag cannot be 'i' or it would be correct
+    const randomTag2 =
+      randomTag1 === 'code'
+        ? getRandomTag(['article', 'section', 'div', 'code'])
+        : getRandomTag();
     return `
-        <code data-class="42${generateRandomString()}">
+        <${randomTag1} data-class="42${generateRandomString()}">
           <div data-tag="${generateRandomString()}36">
             <span data-id="${generateRandomString()}31${generateRandomString()}">
-              <${randomTag} class="char" value="${char}"></${randomTag}>
+              <${randomTag2} class="char" value="${char}"></${randomTag2}>
             </span>
           </div>
-        </code>
+        </${randomTag1}>
       `;
   }
 
-  // Function to shuffle the correct and incorrect structures
-  function shuffleArray(array) {
-    for (let i = array.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [array[i], array[j]] = [array[j], array[i]];
+  function shuffleArrays(arr1, arr2) {
+    function shuffle(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
     }
-    return array;
+
+    // Shuffle the second array
+    shuffle(arr2);
+
+    let result = [];
+    let arr1Index = 0;
+    let arr2Index = 0;
+
+    // Go through the combined length of both arrays
+    for (let i = 0; i < arr1.length + arr2.length; i++) {
+      // Decide whether to add an element from arr1 or arr2
+      if (
+        arr1Index < arr1.length &&
+        (arr2Index >= arr2.length || Math.random() < 0.5)
+      ) {
+        result.push(arr1[arr1Index++]);
+      } else {
+        result.push(arr2[arr2Index++]);
+      }
+    }
+
+    return result;
   }
 
   // Generate the correct characters for the URL
-  const chars = url.split('').map(char => createCorrectStructure(char));
+  const chars = flagUrl.split('').map(char => createCorrectStructure(char));
 
   // Generate random incorrect structures
   const incorrectChars = Array.from({ length: chars.length }, () => {
@@ -114,7 +143,7 @@ const shuffleFlagIntoHTML = url => {
   });
 
   // Combine and shuffle them
-  const combined = shuffleArray([...chars, ...incorrectChars]);
+  const combined = shuffleArrays(chars, incorrectChars);
 
   // Join the array into a single HTML string
   return combined.join('');
@@ -129,4 +158,7 @@ export const generateChallengeHTML = (serverURL, flagCode) => {
   return final;
 };
 
-export const readChallengeHTML = () => {};
+export const readChallengeHTML = () => {
+  const challenge = readLocalFile('challenge.html');
+  return challenge;
+};

@@ -6,6 +6,7 @@ import {
   generateChallengeHTML,
   generateChallengeMarkdownHTML,
   generateFlagHTML,
+  readChallengeHTML,
 } from './controller.js';
 
 const { SERVER_URL, SERVER_PORT } = process.env;
@@ -20,8 +21,8 @@ app.get('/', (req, res) => {
 });
 
 app.get('/challenge', (req, res) => {
-  const markdown = generateChallengeMarkdownHTML(SERVER_URL);
-  res.send(markdown);
+  const challenge = readChallengeHTML();
+  res.send(challenge);
 });
 
 app.get('/336e5a', (req, res) => {

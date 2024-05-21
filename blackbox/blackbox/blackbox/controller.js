@@ -2,6 +2,12 @@ import { readFileSync } from 'fs';
 import { dirname, join } from 'path';
 import { fileURLToPath } from 'url';
 
+const readLocalFile = filename => {
+  const __dirname = dirname(fileURLToPath(import.meta.url));
+  const filePath = join(__dirname, filename);
+  return readFileSync(filePath, 'utf8');
+};
+
 export const generateChallengeMarkdownHTML = (serverURL, lang = 'en-US') => {
   try {
     const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -29,3 +35,20 @@ export const generateFlagHTML = () => {
     '<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /></head><body>{{flag}}</body></html>';
   return template.replace('{{flag}}', flag);
 };
+
+const shuffleFlagIntoHTML = flag => {
+  const encoded = flag;
+
+  return encoded;
+};
+
+export const generateChallengeHTML = (serverURL, flagCode) => {
+  const template = readLocalFile('challenge-template.html');
+  const challenge = shuffleFlagIntoHTML(serverURL + '/' + flagCode);
+  const final = template.replace('{{challenge}}', challenge);
+
+  console.log(final);
+  return final;
+};
+
+export const readChallengeHTML = () => {};

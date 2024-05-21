@@ -23,7 +23,9 @@ In this Capture the Flag (CTF) challenge, you'll need to complete various tasks 
 
 ### Installation
 
-## TODO: installation
+#### TODO: installation
+
+## Pattern of the DOM tree for each valid character of the URL
 
 ## Documentation
 

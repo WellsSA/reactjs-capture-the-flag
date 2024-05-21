@@ -1,0 +1,17 @@
+{
+  "name": "reactjs-capture-the-flag",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "WellsSA <wel.cavzod@gmail.com>",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "challenge:start": "node ./blackbox/blackbox/blackbox/server.js",
+    "dev": "npx nodemon ./blackbox/blackbox/blackbox/server.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2"
+  }
+}

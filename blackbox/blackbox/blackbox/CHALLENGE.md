@@ -10,6 +10,7 @@
 - Each character of the URL is given by this DOM tree, in this specific order. You need to find (in order) all of the occurrences and join them to get the link.
 - The asterisk **(\*)** is a wildcard representing zero or more characters that can be present in the string. These characters are irrelevant to the result and should be ignored.
 - There can be zero or more DOM nodes between each valid tag. These nodes are irrelevant to the result.
+- There might be distractions within the information in the description of this challenge.
 - Any additional attribute that doesn't interfere with the described pattern can be safely ignored.
 
 ---

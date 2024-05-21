@@ -2,7 +2,10 @@ import 'dotenv/config';
 
 import express from 'express';
 import cors from 'cors';
-import { generateChallengeMarkdown, generateFlagHTML } from './controller.js';
+import {
+  generateChallengeMarkdownHTML,
+  generateFlagHTML,
+} from './controller.js';
 
 const { SERVER_URL, SERVER_PORT } = process.env;
 console.log(SERVER_URL);
@@ -11,12 +14,12 @@ const app = express();
 app.use(cors());
 
 app.get('/', (req, res) => {
-  const markdown = generateChallengeMarkdown(SERVER_URL);
+  const markdown = generateChallengeMarkdownHTML(SERVER_URL);
   res.send(markdown);
 });
 
 app.get('/', (req, res) => {
-  const markdown = generateChallengeMarkdown(SERVER_URL);
+  const markdown = generateChallengeMarkdownHTML(SERVER_URL);
   res.send(markdown);
 });
 

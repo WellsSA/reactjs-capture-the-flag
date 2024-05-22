@@ -11,6 +11,20 @@ import {
 const { SERVER_URL, SERVER_PORT, FLAG, LANGUAGE } = process.env;
 const FLAG_CODE = btoa(FLAG);
 
+const greetings = {
+  'en-us':
+    'Please decode the text below. Upon decoding, you will be taken to a URL with further instructions on completing the challenge.',
+  'pt-br':
+    'Por favor, decodifique o texto abaixo. Ao decodificar, você será levado a uma URL com mais instruções sobre como completar o desafio.',
+  'es-es':
+    'Por favor, decodifique el texto a continuación. Al decodificarlo, será dirigido a una URL con más instrucciones sobre cómo completar el desafío.',
+};
+
+if (!greetings[LANGUAGE]) {
+  console.error('Language not supported. Please check your .env file.');
+  process.exit(1);
+}
+
 const app = express();
 app.use(cors());
 
@@ -34,11 +48,4 @@ app.listen(SERVER_PORT, () => {
 
 generateChallengeHTML(SERVER_URL, FLAG_CODE);
 
-console.info(
-  '\n[en] Please decode the text below. Upon decoding, you will be taken to a URL with further instructions on completing the challenge.',
-  '\n---',
-  '\n[pt] Por favor, decodifique o texto abaixo. Ao decodificar, você será levado a uma URL com mais instruções sobre como completar o desafio.',
-  '\n---',
-  '\n[es] Por favor, decodifique el texto a continuación. Al decodificarlo, será dirigido a una URL con más instrucciones sobre cómo completar el desafío.',
-  `\n\n Text: ${btoa(SERVER_URL)}`
-);
+console.info(`\n${greetings[LANGUAGE]}\n\n Text: ${btoa(SERVER_URL)}`);

@@ -35,13 +35,6 @@ export const generateChallengeMarkdownHTML = (serverURL, lang = 'en-US') => {
   }
 };
 
-export const generateFlagHTML = () => {
-  const flag = 'navigate';
-  const template =
-    '<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /></head><body>{{flag}}</body></html>';
-  return template.replace('{{flag}}', flag);
-};
-
 const shuffleFlagIntoHTML = flagUrl => {
   function generateRandomString() {
     const length = Math.floor(Math.random() * 10) + 5; // Random length between 5 and 14

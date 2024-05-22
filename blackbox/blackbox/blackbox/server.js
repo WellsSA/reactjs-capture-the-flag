@@ -5,12 +5,11 @@ import cors from 'cors';
 import {
   generateChallengeHTML,
   generateChallengeMarkdownHTML,
-  generateFlagHTML,
   readChallengeHTML,
 } from './controller.js';
 
-const { SERVER_URL, SERVER_PORT } = process.env;
-console.log(SERVER_URL);
+const { SERVER_URL, SERVER_PORT, FLAG } = process.env;
+const FLAG_CODE = btoa(FLAG);
 
 const app = express();
 app.use(cors());
@@ -25,16 +24,15 @@ app.get('/challenge', (req, res) => {
   res.send(challenge);
 });
 
-app.get('/336e5a', (req, res) => {
-  const flag = generateFlagHTML();
-  res.send(flag);
+app.get('/' + FLAG_CODE, (req, res) => {
+  res.send(FLAG);
 });
 
 app.listen(SERVER_PORT, () => {
   console.info(`[Blackbox ready, challenge started]`);
 });
 
-generateChallengeHTML(SERVER_URL, '336e5a');
+generateChallengeHTML(SERVER_URL, FLAG_CODE);
 
 console.info(
   '\n[en] Please decode the text below. Upon decoding, you will be taken to a URL with further instructions on completing the challenge.',

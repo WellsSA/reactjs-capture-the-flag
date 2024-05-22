@@ -14,14 +14,10 @@ const writeLocalFile = (filename, data) => {
   return writeFileSync(filePath, data);
 };
 
-export const generateChallengeMarkdownHTML = (serverURL, lang = 'en-US') => {
+export const generateChallengeMarkdownHTML = (serverURL, lang = 'en-us') => {
   try {
-    const __dirname = dirname(fileURLToPath(import.meta.url));
-
     // TODO: add internationalization support (CHALLENGE.lang.md)
-    const filePath = join(__dirname, 'CHALLENGE.md');
-
-    const raw = readFileSync(filePath, 'utf8');
+    const raw = readLocalFile(`CHALLENGE.${lang}.md`);
     const markdown = raw
       .replace(/{{SERVER_URL}}/g, serverURL)
       .replace(/</g, '&lt;'); // prevents html codeblock being rendered as HTML

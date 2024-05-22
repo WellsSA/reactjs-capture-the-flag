@@ -8,14 +8,14 @@ import {
   readChallengeHTML,
 } from './controller.js';
 
-const { SERVER_URL, SERVER_PORT, FLAG } = process.env;
+const { SERVER_URL, SERVER_PORT, FLAG, LANGUAGE } = process.env;
 const FLAG_CODE = btoa(FLAG);
 
 const app = express();
 app.use(cors());
 
 app.get('/', (req, res) => {
-  const markdown = generateChallengeMarkdownHTML(SERVER_URL);
+  const markdown = generateChallengeMarkdownHTML(SERVER_URL, LANGUAGE);
   res.send(markdown);
 });
 

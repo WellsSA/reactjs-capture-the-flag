@@ -49,7 +49,7 @@ Bonus: Add as a comment the script you used to to get the URL in step 2
 
 ## Submission
 
-Open an issue on the repository with the title: "CTF solution".
+Open an issue on the [repository](https://github.com/WellsSA/reactjs-capture-the-flag) with the title: "CTF solution".
 Paste the flag you captured in step 2 and the link to your CodeSandbox in the job application with the following format:
 
 `FLAG - LINK`
